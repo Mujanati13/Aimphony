@@ -1896,7 +1896,6 @@ const PodcastAILanding = () => {
           <div style={styles.footerBottom}>
             <p style={styles.copyright}>
               Created by <a href="https://x.com/Mujanati13">Mohammed Janati</a>.
-              Thanks Lobna
             </p>
             <div style={styles.footerBottomLinks}>
               <a href="#" style={styles.footerBottomLink}>
