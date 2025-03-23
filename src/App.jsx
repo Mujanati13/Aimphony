@@ -1847,8 +1847,8 @@ const PodcastAILanding = () => {
 
           <div style={styles.footerBottom}>
             <p style={styles.copyright}>
-              {/* © 2025 {translations[language].appName}. All rights reserved */}
-              Created by <a href="https://x.com/Mujanati13">Mohammed Janati</a>. Thanks Lobna
+              Created by <a href="https://x.com/Mujanati13">Mohammed Janati</a>.
+              Thanks Lobna
             </p>
             <div style={styles.footerBottomLinks}>
               <a href="#" style={styles.footerBottomLink}>
@@ -1971,6 +1971,19 @@ const PodcastAILanding = () => {
               width: 100% !important;
               margin: 8px 0 !important;
             }
+            
+            /* Reduce container padding and adjust typography */
+            .sectionContainer {
+              padding: 0 16px !important;
+            }
+            
+            .sectionTitle {
+              font-size: 28px !important;
+            }
+            
+            .sectionSubtitle {
+              font-size: 14px !important;
+            }
           }
           
           /* Extra adjustments for smaller phones */
@@ -1995,6 +2008,29 @@ const PodcastAILanding = () => {
             .languageSelector {
               padding: 2px 4px !important;
               font-size: 12px !important;
+            }
+            /* Further reduce section padding */
+            .sectionTitle {
+              font-size: 26px !important;
+            }
+            .sectionSubtitle {
+              font-size: 13px !important;
+            }
+            .downloadCard {
+              padding: 20px !important;
+            }
+          }
+          
+          /* Tablet adjustments for intermediate screen sizes */
+          @media (max-width: 1024px) and (min-width: 769px) {
+            .sectionTitle {
+              font-size: 30px !important;
+            }
+            .sectionSubtitle {
+              font-size: 15px !important;
+            }
+            .downloadCard {
+              padding: 30px !important;
             }
           }
         `}
