@@ -21,8 +21,166 @@ import {
 } from "react-icons/io5";
 
 const PodcastAILanding = () => {
-  // Set default theme to light mode
-  const [darkMode] = useState(false);
+  // Language state with default set to English
+  const [language, setLanguage] = useState("en");
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
+  // Translations for English, French, and Arabic
+  const translations = {
+    en: {
+      appName: "Aimphony",
+      tagline: "Your Intelligent Podcast Companion",
+      navLinks: {
+        features: "Features",
+        discover: "Discover",
+        categories: "Categories",
+        testimonials: "Testimonials",
+        download: "Download",
+      },
+      hero: {
+        beta: "BETA",
+        comingSoon: "Coming Soon",
+      },
+      featuresSection: {
+        title: "Why Choose Aimphony?",
+        subtitle:
+          "Experience podcast listening like never before with our innovative features",
+      },
+      podcastTabs: {
+        trending: "Trending",
+        popular: "Popular",
+        new: "New Releases",
+      },
+      podcastsSection: {
+        title: "Discover Amazing Podcasts",
+        subtitle:
+          "Browse our extensive library of high-quality podcasts across all genres",
+      },
+      categoriesSection: {
+        title: "Browse by Category",
+        subtitle: "Find podcasts organized by topics you care about",
+      },
+      testimonialsSection: {
+        title: "What Our Users Say",
+        subtitle: "Join thousands of satisfied podcast enthusiasts",
+      },
+      downloadSection: {
+        title: "Download Aimphony Today",
+        text: "Join our community of podcast lovers and discover your next favorite show. Available on all major platforms.",
+        note: "Free download. Premium features available with subscription.",
+      },
+      cta: {
+        learnMore: "Learn More",
+        browseAll: "Browse All Podcasts",
+      },
+    },
+    fr: {
+      appName: "Aimphony",
+      tagline: "Votre compagnon intelligent de podcasts",
+      navLinks: {
+        features: "Fonctionnalités",
+        discover: "Découvrir",
+        categories: "Catégories",
+        testimonials: "Témoignages",
+        download: "Télécharger",
+      },
+      hero: {
+        beta: "BÊTA",
+        comingSoon: "Bientôt Disponible",
+      },
+      featuresSection: {
+        title: "Pourquoi choisir Aimphony ?",
+        subtitle:
+          "Découvrez l'écoute de podcasts comme jamais auparavant avec nos fonctionnalités innovantes",
+      },
+      podcastTabs: {
+        trending: "Tendance",
+        popular: "Populaires",
+        new: "Nouvelles Sorties",
+      },
+      podcastsSection: {
+        title: "Découvrez des Podcasts Incroyables",
+        subtitle:
+          "Parcourez notre vaste bibliothèque de podcasts de haute qualité dans tous les genres",
+      },
+      categoriesSection: {
+        title: "Parcourir par Catégorie",
+        subtitle:
+          "Trouvez des podcasts organisés par les sujets qui vous intéressent",
+      },
+      testimonialsSection: {
+        title: "Ce que disent nos utilisateurs",
+        subtitle: "Rejoignez des milliers d'amateurs de podcasts satisfaits",
+      },
+      downloadSection: {
+        title: "Téléchargez Aimphony Aujourd'hui",
+        text: "Rejoignez notre communauté d'amateurs de podcasts et découvrez votre prochain podcast préféré. Disponible sur toutes les principales plateformes.",
+        note: "Téléchargement gratuit. Fonctionnalités premium disponibles via abonnement.",
+      },
+      cta: {
+        learnMore: "En savoir plus",
+        browseAll: "Parcourir tous les Podcasts",
+      },
+    },
+    ar: {
+      appName: "Aimphony",
+      tagline: "رفيق البودكاست الذكي الخاص بك",
+      navLinks: {
+        features: "الميزات",
+        discover: "اكتشف",
+        categories: "الفئات",
+        testimonials: "الشهادات",
+        download: "تحميل",
+      },
+      hero: {
+        beta: "بيتا",
+        comingSoon: "قريباً",
+      },
+      featuresSection: {
+        title: "لماذا تختار Aimphony؟",
+        subtitle:
+          "استمتع بتجربة استماع للبودكاست لم تعهدها من قبل مع ميزاتنا المبتكرة",
+      },
+      podcastTabs: {
+        trending: "رائج",
+        popular: "شعبي",
+        new: "إصدارات جديدة",
+      },
+      podcastsSection: {
+        title: "اكتشف بودكاست رائع",
+        subtitle:
+          "تصفح مكتبتنا الواسعة من البودكاست عالية الجودة عبر جميع الأنواع",
+      },
+      categoriesSection: {
+        title: "تصفح حسب الفئة",
+        subtitle: "اعثر على البودكاست المصنفة حسب المواضيع التي تهمك",
+      },
+      testimonialsSection: {
+        title: "ما يقوله مستخدمونا",
+        subtitle: "انضم إلى الآلاف من عشاق البودكاست الراضين",
+      },
+      downloadSection: {
+        title: "حمل Aimphony اليوم",
+        text: "انضم إلى مجتمعنا من عشاق البودكاست واكتشف برنامجك المفضل التالي. متاح على جميع المنصات الرئيسية.",
+        note: "تحميل مجاني. الميزات المميزة متوفرة مع الاشتراك.",
+      },
+      cta: {
+        learnMore: "اعرف المزيد",
+        browseAll: "تصفح جميع البودكاست",
+      },
+    },
+  };
+
+  // State for modal visibility (Coming Soon)
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
+  // Updated download link handler to show a modal
+  const handleDownloadClick = (e) => {
+    e.preventDefault();
+    setShowComingSoon(true);
+  };
 
   // Other state management
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -45,13 +203,13 @@ const PodcastAILanding = () => {
     download: useRef(null),
   };
 
-  // Sample data
+  // Sample data with updated online images
   const trendingPodcasts = [
     {
       id: 1,
       title: "Tech Today",
       creator: "Alex Green",
-      image: "https://via.placeholder.com/300/2196F3/FFFFFF?text=Tech",
+      image: "https://picsum.photos/seed/tech/300/300",
       rating: 4.8,
       duration: "45 min",
       categories: ["Technology", "News"],
@@ -60,7 +218,7 @@ const PodcastAILanding = () => {
       id: 2,
       title: "Crime Stories",
       creator: "Sarah Johnson",
-      image: "https://via.placeholder.com/300/673AB7/FFFFFF?text=Crime",
+      image: "https://picsum.photos/seed/crime/300/300",
       rating: 4.9,
       duration: "60 min",
       categories: ["Crime", "Documentary"],
@@ -69,7 +227,7 @@ const PodcastAILanding = () => {
       id: 3,
       title: "Daily News",
       creator: "Mike Anderson",
-      image: "https://via.placeholder.com/300/4CAF50/FFFFFF?text=News",
+      image: "https://picsum.photos/seed/news/300/300",
       rating: 4.5,
       duration: "30 min",
       categories: ["News", "Politics"],
@@ -78,7 +236,7 @@ const PodcastAILanding = () => {
       id: 4,
       title: "Science Weekly",
       creator: "Emily Parker",
-      image: "https://via.placeholder.com/300/FF9800/FFFFFF?text=Science",
+      image: "https://picsum.photos/seed/science/300/300",
       rating: 4.7,
       duration: "50 min",
       categories: ["Science", "Education"],
@@ -87,7 +245,7 @@ const PodcastAILanding = () => {
       id: 5,
       title: "Comedy Hour",
       creator: "Dave Wilson",
-      image: "https://via.placeholder.com/300/E91E63/FFFFFF?text=Comedy",
+      image: "https://picsum.photos/seed/comedy/300/300",
       rating: 4.6,
       duration: "55 min",
       categories: ["Comedy", "Entertainment"],
@@ -96,7 +254,7 @@ const PodcastAILanding = () => {
       id: 6,
       title: "Healthy Living",
       creator: "Lisa Brown",
-      image: "https://via.placeholder.com/300/009688/FFFFFF?text=Health",
+      image: "https://picsum.photos/seed/health/300/300",
       rating: 4.4,
       duration: "40 min",
       categories: ["Health", "Lifestyle"],
@@ -144,19 +302,20 @@ const PodcastAILanding = () => {
     },
   ];
 
+  // Updated testimonials with online avatar images
   const testimonials = [
     {
       id: 1,
       name: "Michael Thompson",
-      avatar: "https://via.placeholder.com/60/2196F3/FFFFFF?text=MT",
+      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
       role: "Podcast Enthusiast",
       content:
-        "PodcastAI has completely transformed how I discover and enjoy podcasts. The recommendations are spot on!",
+        "Aimphony has completely transformed how I discover and enjoy podcasts. The recommendations are spot on!",
     },
     {
       id: 2,
       name: "Jessica Williams",
-      avatar: "https://via.placeholder.com/60/E91E63/FFFFFF?text=JW",
+      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
       role: "Daily Commuter",
       content:
         "I listen during my commute every day. The offline mode is a lifesaver in areas with poor reception.",
@@ -164,7 +323,7 @@ const PodcastAILanding = () => {
     {
       id: 3,
       name: "Robert Chen",
-      avatar: "https://via.placeholder.com/60/4CAF50/FFFFFF?text=RC",
+      avatar: "https://randomuser.me/api/portraits/men/65.jpg",
       role: "Content Creator",
       content:
         "As a podcast creator, I love the analytics and engagement features. It helps me understand my audience better.",
@@ -181,6 +340,40 @@ const PodcastAILanding = () => {
     borderColor: "#F0F0F0",
     progressBg: "#E0E0E0",
     progressBar: "#2196F3",
+  };
+
+  // Modal styles for the Coming Soon overlay
+  const modalStyles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 2000,
+    },
+    modal: {
+      backgroundColor: "#fff",
+      padding: "20px",
+      borderRadius: "8px",
+      textAlign: "center",
+      maxWidth: "400px",
+      width: "80%",
+      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+    },
+    closeButton: {
+      marginTop: "20px",
+      padding: "8px 16px",
+      backgroundColor: theme.primary,
+      color: "#fff",
+      border: "none",
+      borderRadius: "4px",
+      cursor: "pointer",
+    },
   };
 
   // Initialize animations, simulated loading, and responsive behaviors
@@ -337,6 +530,14 @@ const PodcastAILanding = () => {
       display: "flex",
       alignItems: "center",
     },
+    languageSelector: {
+      marginRight: "16px",
+      padding: "4px 8px",
+      borderRadius: "4px",
+      border: `1px solid ${theme.borderColor}`,
+      backgroundColor: theme.cardBg,
+      color: theme.text,
+    },
     // Dark/Light switch disabled
     themeToggle: {
       cursor: "not-allowed",
@@ -397,6 +598,15 @@ const PodcastAILanding = () => {
       fontSize: "12px",
       zIndex: 2000,
     },
+    // New Title Badge style
+    titleBadge: {
+      marginLeft: "8px",
+      backgroundColor: "red",
+      color: "white",
+      fontSize: "12px",
+      padding: "2px 6px",
+      borderRadius: "4px",
+    },
     logoContainer: {
       display: "flex",
       flexDirection: "column",
@@ -420,12 +630,12 @@ const PodcastAILanding = () => {
       fontSize: "42px",
       fontWeight: 800,
       color: theme.primary,
-      margin: "0 0 8px 0",
+      margin: "0",
     },
     tagline: {
       fontSize: "18px",
       color: theme.text,
-      margin: 0,
+      margin: "8px 0 0 0",
     },
     featureShowcase: {
       marginTop: "50px",
@@ -982,35 +1192,52 @@ const PodcastAILanding = () => {
             <div style={styles.logoCircleSmall}>
               <IoMicOutline color={theme.primary} />
             </div>
-            <span style={styles.navLogoText}>PodcastAI</span>
+            <span style={styles.navLogoText}>
+              {translations[language].appName}
+            </span>
           </div>
 
           {/* Desktop Navigation Links */}
           <div style={styles.navLinks} className="navLinks">
             <a href="#features" style={styles.navLink}>
-              Features
+              {translations[language].navLinks.features}
             </a>
             <a href="#podcasts" style={styles.navLink}>
-              Discover
+              {translations[language].navLinks.discover}
             </a>
             <a href="#categories" style={styles.navLink}>
-              Categories
+              {translations[language].navLinks.categories}
             </a>
             <a href="#testimonials" style={styles.navLink}>
-              Testimonials
+              {translations[language].navLinks.testimonials}
             </a>
           </div>
 
           <div style={styles.navButtons}>
-            <a href="#download" style={styles.downloadButton}>
+            <a
+              href="#download"
+              style={styles.downloadButton}
+              onClick={handleDownloadClick}
+            >
               <IoLogoApple size={16} style={{ marginRight: 4 }} />
               <IoLogoGooglePlaystore size={16} style={{ marginRight: 4 }} />
               <IoLogoWindows size={16} />
             </a>
+            <select
+              value={language}
+              onChange={handleLanguageChange}
+              style={styles.languageSelector}
+            >
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="ar">العربية</option>
+            </select>
             {/* Dark/Light Mode Switch Disabled */}
             <div style={styles.themeToggle}>
               <IoMoonOutline size={24} color={theme.primary} />
-              <span style={{ marginLeft: 4 }}>Coming Soon</span>
+              <span style={{ marginLeft: 4 }}>
+                {translations[language].hero.comingSoon}
+              </span>
             </div>
           </div>
 
@@ -1037,35 +1264,35 @@ const PodcastAILanding = () => {
               style={styles.mobileNavLink}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Features
+              {translations[language].navLinks.features}
             </a>
             <a
               href="#podcasts"
               style={styles.mobileNavLink}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Discover
+              {translations[language].navLinks.discover}
             </a>
             <a
               href="#categories"
               style={styles.mobileNavLink}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Categories
+              {translations[language].navLinks.categories}
             </a>
             <a
               href="#testimonials"
               style={styles.mobileNavLink}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Testimonials
+              {translations[language].navLinks.testimonials}
             </a>
             <a
               href="#download"
               style={styles.mobileNavLink}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Download
+              {translations[language].navLinks.download}
             </a>
           </div>
         )}
@@ -1080,8 +1307,19 @@ const PodcastAILanding = () => {
             <div style={styles.logoCircleLarge}>
               <IoMicOutline size={50} color={theme.primary} />
             </div>
-            <h1 style={styles.appName}>PodcastAI</h1>
-            <p style={styles.tagline}>Your Intelligent Podcast Companion</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h1 style={styles.appName}>{translations[language].appName}</h1>
+              <span style={styles.titleBadge}>
+                {translations[language].hero.beta}
+              </span>
+            </div>
+            <p style={styles.tagline}>{translations[language].tagline}</p>
           </div>
 
           {showContent && (
@@ -1139,13 +1377,17 @@ const PodcastAILanding = () => {
 
           {showContent && (
             <div style={styles.ctaButtons}>
-              <a href="#download" style={styles.downloadBtn}>
+              <a
+                href="#download"
+                style={styles.downloadBtn}
+                onClick={handleDownloadClick}
+              >
                 <IoLogoApple size={20} style={{ marginRight: 8 }} />
                 <IoLogoGooglePlaystore size={20} style={{ marginRight: 8 }} />
                 <IoLogoWindows size={20} />
               </a>
               <a href="#features" style={styles.learnMoreBtn}>
-                Learn More
+                {translations[language].cta.learnMore}
               </a>
             </div>
           )}
@@ -1160,10 +1402,11 @@ const PodcastAILanding = () => {
         className={visibleSections.features ? "animated fadeInUp" : ""}
       >
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitle}>Why Choose PodcastAI?</h2>
+          <h2 style={styles.sectionTitle}>
+            {translations[language].featuresSection.title}
+          </h2>
           <p style={styles.sectionSubtitle}>
-            Experience podcast listening like never before with our innovative
-            features
+            {translations[language].featuresSection.subtitle}
           </p>
 
           <div
@@ -1204,10 +1447,11 @@ const PodcastAILanding = () => {
         className={visibleSections.podcasts ? "animated fadeInUp" : ""}
       >
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitle}>Discover Amazing Podcasts</h2>
+          <h2 style={styles.sectionTitle}>
+            {translations[language].podcastsSection.title}
+          </h2>
           <p style={styles.sectionSubtitle}>
-            Browse our extensive library of high-quality podcasts across all
-            genres
+            {translations[language].podcastsSection.subtitle}
           </p>
 
           {/* Tabs */}
@@ -1223,7 +1467,7 @@ const PodcastAILanding = () => {
               }}
               onClick={() => setActiveTab("trending")}
             >
-              Trending
+              {translations[language].podcastTabs.trending}
             </div>
             <div
               style={{
@@ -1236,7 +1480,7 @@ const PodcastAILanding = () => {
               }}
               onClick={() => setActiveTab("popular")}
             >
-              Popular
+              {translations[language].podcastTabs.popular}
             </div>
             <div
               style={{
@@ -1247,7 +1491,7 @@ const PodcastAILanding = () => {
               }}
               onClick={() => setActiveTab("new")}
             >
-              New Releases
+              {translations[language].podcastTabs.new}
             </div>
           </div>
 
@@ -1323,7 +1567,7 @@ const PodcastAILanding = () => {
 
           <div style={styles.browseMoreContainer}>
             <button style={styles.browseMoreButton}>
-              Browse All Podcasts{" "}
+              {translations[language].cta.browseAll}{" "}
               <IoChevronForwardOutline style={{ marginLeft: "4px" }} />
             </button>
           </div>
@@ -1338,9 +1582,11 @@ const PodcastAILanding = () => {
         className={visibleSections.categories ? "animated fadeInUp" : ""}
       >
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitle}>Browse by Category</h2>
+          <h2 style={styles.sectionTitle}>
+            {translations[language].categoriesSection.title}
+          </h2>
           <p style={styles.sectionSubtitle}>
-            Find podcasts organized by topics you care about
+            {translations[language].categoriesSection.subtitle}
           </p>
 
           <div
@@ -1381,9 +1627,11 @@ const PodcastAILanding = () => {
         className={visibleSections.testimonials ? "animated fadeInUp" : ""}
       >
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitle}>What Our Users Say</h2>
+          <h2 style={styles.sectionTitle}>
+            {translations[language].testimonialsSection.title}
+          </h2>
           <p style={styles.sectionSubtitle}>
-            Join thousands of satisfied podcast enthusiasts
+            {translations[language].testimonialsSection.subtitle}
           </p>
 
           <div
@@ -1427,14 +1675,19 @@ const PodcastAILanding = () => {
       >
         <div style={styles.sectionContainer}>
           <div style={styles.downloadCard}>
-            <h2 style={styles.downloadTitle}>Download PodcastAI Today</h2>
+            <h2 style={styles.downloadTitle}>
+              {translations[language].downloadSection.title}
+            </h2>
             <p style={styles.downloadText}>
-              Join our community of podcast lovers and discover your next
-              favorite show. Available on all major platforms.
+              {translations[language].downloadSection.text}
             </p>
 
             <div style={styles.downloadOptions}>
-              <a href="#" style={styles.downloadOption}>
+              <a
+                href="#"
+                style={styles.downloadOption}
+                onClick={handleDownloadClick}
+              >
                 <IoLogoApple size={24} />
                 <div style={styles.downloadOptionText}>
                   <span style={styles.downloadOptionSubtext}>
@@ -1443,14 +1696,22 @@ const PodcastAILanding = () => {
                   <span style={styles.downloadOptionName}>App Store</span>
                 </div>
               </a>
-              <a href="#" style={styles.downloadOption}>
+              <a
+                href="#"
+                style={styles.downloadOption}
+                onClick={handleDownloadClick}
+              >
                 <IoLogoGooglePlaystore size={24} />
                 <div style={styles.downloadOptionText}>
                   <span style={styles.downloadOptionSubtext}>Get it on</span>
                   <span style={styles.downloadOptionName}>Google Play</span>
                 </div>
               </a>
-              <a href="#" style={styles.downloadOption}>
+              <a
+                href="#"
+                style={styles.downloadOption}
+                onClick={handleDownloadClick}
+              >
                 <IoLogoWindows size={24} />
                 <div style={styles.downloadOptionText}>
                   <span style={styles.downloadOptionSubtext}>Download for</span>
@@ -1460,7 +1721,7 @@ const PodcastAILanding = () => {
             </div>
 
             <p style={styles.downloadNote}>
-              Free download. Premium features available with subscription.
+              {translations[language].downloadSection.note}
             </p>
           </div>
         </div>
@@ -1485,10 +1746,12 @@ const PodcastAILanding = () => {
                 <div style={styles.logoCircleSmall}>
                   <IoMicOutline size={20} color={theme.primary} />
                 </div>
-                <span style={styles.footerLogoText}>PodcastAI</span>
+                <span style={styles.footerLogoText}>
+                  {translations[language].appName}
+                </span>
               </div>
               <p style={styles.footerTagline}>
-                Your Intelligent Podcast Companion
+                {translations[language].tagline}
               </p>
               <div style={styles.footerSocial}>
                 <a href="#" style={styles.socialLink}>
@@ -1584,7 +1847,8 @@ const PodcastAILanding = () => {
 
           <div style={styles.footerBottom}>
             <p style={styles.copyright}>
-              © 2025 PodcastAI. All rights reserved.
+              {/* © 2025 {translations[language].appName}. All rights reserved */}
+              Created by <a href="https://x.com/Mujanati13">Mohammed Janati</a>. Thanks Lobna
             </p>
             <div style={styles.footerBottomLinks}>
               <a href="#" style={styles.footerBottomLink}>
@@ -1601,7 +1865,29 @@ const PodcastAILanding = () => {
         </div>
       </footer>
 
-      {/* CSS Animation Keyframes and Media Queries */}
+      {/* Coming Soon Modal */}
+      {showComingSoon && (
+        <div
+          style={modalStyles.overlay}
+          onClick={() => setShowComingSoon(false)}
+        >
+          <div style={modalStyles.modal} onClick={(e) => e.stopPropagation()}>
+            <h2>{translations[language].hero.comingSoon}</h2>
+            <p>
+              This download feature is under development. Please check back
+              soon!
+            </p>
+            <button
+              style={modalStyles.closeButton}
+              onClick={() => setShowComingSoon(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* CSS Animation Keyframes and Responsive Media Queries */}
       <style>
         {`
           @keyframes fadeIn {
@@ -1658,11 +1944,11 @@ const PodcastAILanding = () => {
             }
             
             .downloadButton:hover {
-              background-color: ${darkMode ? "#64B5F6" : "#1976D2"} !important;
+              background-color: ${theme.primary} !important;
             }
             
             .downloadBtn:hover {
-              background-color: ${darkMode ? "#64B5F6" : "#1976D2"} !important;
+              background-color: ${theme.primary} !important;
               transform: translateY(-2px) !important;
             }
             
@@ -1684,6 +1970,31 @@ const PodcastAILanding = () => {
             .downloadOption {
               width: 100% !important;
               margin: 8px 0 !important;
+            }
+          }
+          
+          /* Extra adjustments for smaller phones */
+          @media (max-width: 480px) {
+            .appName {
+              font-size: 32px !important;
+            }
+            .tagline {
+              font-size: 16px !important;
+            }
+            .navLogoText {
+              font-size: 16px !important;
+            }
+            .navLink {
+              margin: 0 8px !important;
+              font-size: 12px !important;
+            }
+            .downloadButton {
+              padding: 6px 12px !important;
+              font-size: 12px !important;
+            }
+            .languageSelector {
+              padding: 2px 4px !important;
+              font-size: 12px !important;
             }
           }
         `}
