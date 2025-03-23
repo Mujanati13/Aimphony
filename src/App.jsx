@@ -19,6 +19,7 @@ import {
   IoMoonOutline,
   IoSunnyOutline,
 } from "react-icons/io5";
+import { IoLogoGithub } from "react-icons/io5";
 
 const PodcastAILanding = () => {
   // Language state with default set to English
@@ -191,6 +192,7 @@ const PodcastAILanding = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [visibleSections, setVisibleSections] = useState({});
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [githubStars, setGithubStars] = useState(10);
 
   // Refs for animations and scroll detection
   const progressBarRef = useRef(null);
@@ -376,6 +378,14 @@ const PodcastAILanding = () => {
     },
   };
 
+  // Additional style for mobile menu buttons inside slide menu
+  const mobileMenuButtonsStyle = {
+    marginTop: "16px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+  };
+
   // Initialize animations, simulated loading, and responsive behaviors
   useEffect(() => {
     simulateLoading();
@@ -500,8 +510,9 @@ const PodcastAILanding = () => {
       fontWeight: 700,
       color: theme.primary,
     },
+    // Desktop navigation links and buttons (only visible on wider screens)
     navLinks: {
-      display: "flex",
+      display: windowWidth >= 768 ? "flex" : "none",
     },
     navLink: {
       color: theme.text,
@@ -512,7 +523,7 @@ const PodcastAILanding = () => {
       transition: "color 0.3s ease",
     },
     navButtons: {
-      display: "flex",
+      display: windowWidth >= 768 ? "flex" : "none",
       alignItems: "center",
     },
     downloadButton: {
@@ -538,7 +549,6 @@ const PodcastAILanding = () => {
       backgroundColor: theme.cardBg,
       color: theme.text,
     },
-    // Dark/Light switch disabled
     themeToggle: {
       cursor: "not-allowed",
       display: "flex",
@@ -547,7 +557,7 @@ const PodcastAILanding = () => {
       fontSize: "12px",
     },
     mobileMenuIcon: {
-      display: "flex",
+      display: windowWidth < 768 ? "flex" : "none",
       cursor: "pointer",
     },
     mobileMenu: {
@@ -586,7 +596,6 @@ const PodcastAILanding = () => {
       padding: "0 24px",
       position: "relative",
     },
-    // Beta badge displayed during loading
     betaBadge: {
       position: "absolute",
       top: 20,
@@ -598,7 +607,6 @@ const PodcastAILanding = () => {
       fontSize: "12px",
       zIndex: 2000,
     },
-    // New Title Badge style
     titleBadge: {
       marginLeft: "8px",
       backgroundColor: "red",
@@ -1188,6 +1196,7 @@ const PodcastAILanding = () => {
       {/* Navigation */}
       <nav style={styles.navbar}>
         <div style={styles.navContainer}>
+          {/* Always show the app name */}
           <div style={styles.navLogo}>
             <div style={styles.logoCircleSmall}>
               <IoMicOutline color={theme.primary} />
@@ -1196,51 +1205,85 @@ const PodcastAILanding = () => {
               {translations[language].appName}
             </span>
           </div>
-
-          {/* Desktop Navigation Links */}
-          <div style={styles.navLinks} className="navLinks">
-            <a href="#features" style={styles.navLink}>
-              {translations[language].navLinks.features}
-            </a>
-            <a href="#podcasts" style={styles.navLink}>
-              {translations[language].navLinks.discover}
-            </a>
-            <a href="#categories" style={styles.navLink}>
-              {translations[language].navLinks.categories}
-            </a>
-            <a href="#testimonials" style={styles.navLink}>
-              {translations[language].navLinks.testimonials}
-            </a>
-          </div>
-
-          <div style={styles.navButtons}>
-            <a
-              href="#download"
-              style={styles.downloadButton}
-              onClick={handleDownloadClick}
-            >
-              <IoLogoApple size={16} style={{ marginRight: 4 }} />
-              <IoLogoGooglePlaystore size={16} style={{ marginRight: 4 }} />
-              <IoLogoWindows size={16} />
-            </a>
-            <select
-              value={language}
-              onChange={handleLanguageChange}
-              style={styles.languageSelector}
-            >
-              <option value="en">English</option>
-              <option value="fr">Français</option>
-              <option value="ar">العربية</option>
-            </select>
-            {/* Dark/Light Mode Switch Disabled */}
-            <div style={styles.themeToggle}>
-              <IoMoonOutline size={24} color={theme.primary} />
-              <span style={{ marginLeft: 4 }}>
-                {translations[language].hero.comingSoon}
-              </span>
-            </div>
-          </div>
-
+          {/* Desktop Navigation Links & Buttons */}
+          {windowWidth >= 768 && (
+            <>
+              <div style={styles.navLinks} className="navLinks">
+                <a href="#features" style={styles.navLink}>
+                  {translations[language].navLinks.features}
+                </a>
+                <a href="#podcasts" style={styles.navLink}>
+                  {translations[language].navLinks.discover}
+                </a>
+                <a href="#categories" style={styles.navLink}>
+                  {translations[language].navLinks.categories}
+                </a>
+                <a href="#testimonials" style={styles.navLink}>
+                  {translations[language].navLinks.testimonials}
+                </a>
+              </div>
+              <div style={styles.navButtons}>
+                <a
+                  href="#download"
+                  style={styles.downloadButton}
+                  onClick={handleDownloadClick}
+                >
+                  <IoLogoApple size={16} style={{ marginRight: 4 }} />
+                  <IoLogoGooglePlaystore size={16} style={{ marginRight: 4 }} />
+                  <IoLogoWindows size={16} />
+                </a>
+                <a
+                  href="https://github.com/Mujanati13/Aimphony"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: theme.text,
+                    textDecoration: "none",
+                    fontSize: "14px",
+                    marginLeft: "12px",
+                    marginRight: "12px",
+                    padding: "4px 8px",
+                    borderRadius: "4px",
+                    border: `1px solid ${theme.borderColor}`,
+                    backgroundColor: "transparent",
+                    transition: "background-color 0.3s ease",
+                  }}
+                >
+                  <IoLogoGithub size={16} style={{ marginRight: "6px" }} />
+                  <span>Star</span>
+                  <span
+                    style={{
+                      marginLeft: "6px",
+                      backgroundColor: "#f0f0f0",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      fontSize: "12px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {githubStars.toLocaleString()}
+                  </span>
+                </a>
+                <select
+                  value={language}
+                  onChange={handleLanguageChange}
+                  style={styles.languageSelector}
+                >
+                  <option value="en">English</option>
+                  <option value="fr">Français</option>
+                  <option value="ar">العربية</option>
+                </select>
+                <div style={styles.themeToggle}>
+                  <IoMoonOutline size={24} color={theme.primary} />
+                  <span style={{ marginLeft: 4 }}>
+                    {translations[language].hero.comingSoon}
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
           {/* Mobile Navigation Toggle */}
           {windowWidth < 768 && (
             <div
@@ -1255,8 +1298,7 @@ const PodcastAILanding = () => {
             </div>
           )}
         </div>
-
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Slide Menu */}
         {isMobileMenuOpen && windowWidth < 768 && (
           <div style={styles.mobileMenu}>
             <a
@@ -1294,6 +1336,32 @@ const PodcastAILanding = () => {
             >
               {translations[language].navLinks.download}
             </a>
+            <div style={mobileMenuButtonsStyle}>
+              <a
+                href="#download"
+                style={styles.downloadButton}
+                onClick={handleDownloadClick}
+              >
+                <IoLogoApple size={16} style={{ marginRight: 4 }} />
+                <IoLogoGooglePlaystore size={16} style={{ marginRight: 4 }} />
+                <IoLogoWindows size={16} />
+              </a>
+              <select
+                value={language}
+                onChange={handleLanguageChange}
+                style={styles.languageSelector}
+              >
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+              </select>
+              <div style={styles.themeToggle}>
+                <IoMoonOutline size={24} color={theme.primary} />
+                <span style={{ marginLeft: 4 }}>
+                  {translations[language].hero.comingSoon}
+                </span>
+              </div>
+            </div>
           </div>
         )}
       </nav>
@@ -1301,7 +1369,6 @@ const PodcastAILanding = () => {
       {/* Hero Section */}
       <section style={styles.heroSection}>
         <div style={styles.heroSplash}>
-          {/* Beta badge on loading page */}
           {!loadingComplete && <div style={styles.betaBadge}>BETA</div>}
           <div style={styles.logoContainer} ref={logoRef}>
             <div style={styles.logoCircleLarge}>
@@ -1321,7 +1388,6 @@ const PodcastAILanding = () => {
             </div>
             <p style={styles.tagline}>{translations[language].tagline}</p>
           </div>
-
           {showContent && (
             <div style={styles.featureShowcase}>
               {features.map((feature, index) => (
@@ -1363,7 +1429,6 @@ const PodcastAILanding = () => {
               </div>
             </div>
           )}
-
           {!loadingComplete && (
             <div style={styles.progressContainer}>
               <div style={styles.progressBarContainer}>
@@ -1374,7 +1439,6 @@ const PodcastAILanding = () => {
               </div>
             </div>
           )}
-
           {showContent && (
             <div style={styles.ctaButtons}>
               <a
@@ -1408,7 +1472,6 @@ const PodcastAILanding = () => {
           <p style={styles.sectionSubtitle}>
             {translations[language].featuresSection.subtitle}
           </p>
-
           <div
             style={{
               ...styles.featureGrid,
@@ -1453,8 +1516,6 @@ const PodcastAILanding = () => {
           <p style={styles.sectionSubtitle}>
             {translations[language].podcastsSection.subtitle}
           </p>
-
-          {/* Tabs */}
           <div style={styles.podcastTabs}>
             <div
               style={{
@@ -1494,8 +1555,6 @@ const PodcastAILanding = () => {
               {translations[language].podcastTabs.new}
             </div>
           </div>
-
-          {/* Search */}
           <div style={styles.searchContainer}>
             <div style={styles.searchBar}>
               <IoSearchOutline size={20} color={theme.text} />
@@ -1506,8 +1565,6 @@ const PodcastAILanding = () => {
               />
             </div>
           </div>
-
-          {/* Podcast Grid */}
           <div
             style={{
               ...styles.podcastGrid,
@@ -1564,7 +1621,6 @@ const PodcastAILanding = () => {
                 </div>
               ))}
           </div>
-
           <div style={styles.browseMoreContainer}>
             <button style={styles.browseMoreButton}>
               {translations[language].cta.browseAll}{" "}
@@ -1588,7 +1644,6 @@ const PodcastAILanding = () => {
           <p style={styles.sectionSubtitle}>
             {translations[language].categoriesSection.subtitle}
           </p>
-
           <div
             style={{
               ...styles.categoriesGrid,
@@ -1633,7 +1688,6 @@ const PodcastAILanding = () => {
           <p style={styles.sectionSubtitle}>
             {translations[language].testimonialsSection.subtitle}
           </p>
-
           <div
             style={{
               ...styles.testimonialsGrid,
@@ -1681,7 +1735,6 @@ const PodcastAILanding = () => {
             <p style={styles.downloadText}>
               {translations[language].downloadSection.text}
             </p>
-
             <div style={styles.downloadOptions}>
               <a
                 href="#"
@@ -1719,7 +1772,6 @@ const PodcastAILanding = () => {
                 </div>
               </a>
             </div>
-
             <p style={styles.downloadNote}>
               {translations[language].downloadSection.note}
             </p>
@@ -1765,7 +1817,6 @@ const PodcastAILanding = () => {
                 </a>
               </div>
             </div>
-
             <div style={styles.footerColumn}>
               <h3 style={styles.footerHeading}>Explore</h3>
               <ul style={styles.footerLinks}>
@@ -1791,7 +1842,6 @@ const PodcastAILanding = () => {
                 </li>
               </ul>
             </div>
-
             <div style={styles.footerColumn}>
               <h3 style={styles.footerHeading}>Resources</h3>
               <ul style={styles.footerLinks}>
@@ -1817,7 +1867,6 @@ const PodcastAILanding = () => {
                 </li>
               </ul>
             </div>
-
             <div style={styles.footerColumn}>
               <h3 style={styles.footerHeading}>Company</h3>
               <ul style={styles.footerLinks}>
@@ -1844,7 +1893,6 @@ const PodcastAILanding = () => {
               </ul>
             </div>
           </div>
-
           <div style={styles.footerBottom}>
             <p style={styles.copyright}>
               Created by <a href="https://x.com/Mujanati13">Mohammed Janati</a>.
@@ -1972,7 +2020,6 @@ const PodcastAILanding = () => {
               margin: 8px 0 !important;
             }
             
-            /* Reduce container padding and adjust typography */
             .sectionContainer {
               padding: 0 16px !important;
             }
@@ -2009,7 +2056,6 @@ const PodcastAILanding = () => {
               padding: 2px 4px !important;
               font-size: 12px !important;
             }
-            /* Further reduce section padding */
             .sectionTitle {
               font-size: 26px !important;
             }
@@ -2021,7 +2067,6 @@ const PodcastAILanding = () => {
             }
           }
           
-          /* Tablet adjustments for intermediate screen sizes */
           @media (max-width: 1024px) and (min-width: 769px) {
             .sectionTitle {
               font-size: 30px !important;
